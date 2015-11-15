@@ -37,9 +37,6 @@ public class datastore{
        	dataList.add(temp);
 	}
 
-	public static void inputAttributeDomainList(){
-		int x = dataList.size();
-	}
 
 	public static void inputClassDomainList(){
 		int index = dataList.get(0).size();
@@ -56,6 +53,28 @@ public class datastore{
 			if(satisfy){
 				classDomainList.add(currentlyObserved);
 			}
+		}
+	}
+
+	public static void inputAttributeDomainList(){
+		int index = dataList.get(0).size();
+		for(int i = 0; i < index-1; i++){
+			ArrayList<String> temp = new ArrayList<String>();
+			for(int j = 0; j < dataList.size(); j++){
+				String currentlyObserved = dataList.get(j).get(i);
+				boolean satisfy = true;
+				int k = 0;
+				while (k < temp.size() && satisfy){
+					if (currentlyObserved.equals(temp.get(k))){
+						satisfy = false;
+					}
+					k++;
+				}
+				if(satisfy){
+					temp.add(currentlyObserved);
+				}
+			}
+			attributeDomainList.add(temp);
 		}
 	}
 
@@ -77,14 +96,18 @@ public class datastore{
          	e.printStackTrace();
       	}
 
-      	// mencatat domain value dari atribut dan kelas
-
-
-
       	inputClassDomainList();
       	for(int i = 0; i < classDomainList.size(); i++){
       		System.out.println(classDomainList.get(i));
        	}
+
+       	inputAttributeDomainList();
+       	for(int i = 0; i < attributeDomainList.size(); i++){
+	      	for(int j = 0; j < attributeDomainList.get(i).size(); j++){
+	      		System.out.print(attributeDomainList.get(i).get(j));
+	       	}
+	       	System.out.println();
+	    }
   	}
 
 
