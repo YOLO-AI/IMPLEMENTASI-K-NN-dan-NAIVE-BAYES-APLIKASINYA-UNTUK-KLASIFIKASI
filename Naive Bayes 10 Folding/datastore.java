@@ -4,24 +4,28 @@ import java.io.*;
 public class datastore{
 	public static ArrayList<ArrayList<String>> attributeDomainList = new ArrayList<ArrayList<String>>(); //list value dari atribut-atribut
 	/* struktur:
-		atr1 : val11 val12 val13 dst...
-		atr2 : val21 val22 val23 dst...
-		atr3 : val31 val32 val33 dts...
+		|XXXXX		|domain 1 	|domain 2	|domain 3	|dst...		|
+		|atribut 1 	|val 1 		|val 2 		|val 3 		|			|
+		|atribut 2 	|val 1 		|val 2 		|val 3 		|			|
+		|atribut 3 	|val 1 		|val 2 		|val 3 		|			|
+		|dst... 	|	 		|	 		|			|			|
 	*/
 
 	public static ArrayList<String> classDomainList = new ArrayList<String>(); //list value dari kelas
 	/* struktur:
-		class
-		val1
-		val2
-		val3
+		|class 	|
+		|val1 	|
+		|val2 	|
+		|val3 	|
 	*/
 
 	public static ArrayList<ArrayList<String>> dataList = new ArrayList<ArrayList<String>>(); //list berisi data value atribut dan kelas
 	/* struktur:
-		row1 : valatr1 valatr2 valatr3 dst...
-		row2 : valatr1 valatr2 valatr3 dst...
-		row3 : valatr1 valatr2 valatr3 dts...
+		|XXXXX	|atribut 1 	|atribut 2	|atribut 3	|dst...		|
+		|row 1 	|val 1 		|val 2 		|val 3 		|			|
+		|row 2 	|val 1 		|val 2 		|val 3 		|			|
+		|row 3 	|val 1 		|val 2 		|val 3 		|			|
+		|dst... |	 		|	 		|			|			|
 	*/
 
 	public static void inputDatalist(String[] tokens){
