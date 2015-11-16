@@ -2,31 +2,19 @@
 import java.util.*;
 import java.io.*;
 public class NaiveBayes{
-	public instanceTable dataTest;
-	public probabilityNB ProbabilityNB;
 
 	public NaiveBayes(){
-		dataTest = new instanceTable();
-		ProbabilityNB = new probabilityNB();
 	}
 
-	public NaiveBayes(instanceTable _instanceTable){
-		dataTest = new instanceTable();
+	public NaiveBayes(instanceTable _instanceTable, probabilityNB ProbabilityNB){
 		ProbabilityNB = new probabilityNB();
-		for (int row = 0; row < _instanceTable.size(); row++){
-			instance tempInstance = new instance();
-			for (int att = 0; att < _instanceTable.getRow(row).size(); att++){
-				tempInstance.add(_instanceTable.getElement(row, att));
-			}
-			dataTest.add(tempInstance);
-		}
 
 		//count class
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			float count = 0;
 			//iterasi seluruh DataStore
-			for(int row = 0; row < datastore.DataStore.size(); row++){
-				if(datastore.DataStore.getElement(row,datastore.AttributeDomainTable.size())
+			for(int row = 0; row < _instanceTable.size(); row++){
+				if(_instanceTable.getElement(row,datastore.AttributeDomainTable.size())
 					.equals(datastore.ClassDomain.getElement(dcls))){
 					count = count + 1;
 				}
@@ -57,11 +45,11 @@ public class NaiveBayes{
 				for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 					float count = 0;
 					//iterasi seluruh DataStore
-					for(int row = 0; row < datastore.DataStore.size(); row++){
+					for(int row = 0; row < _instanceTable.size(); row++){
 						
-							if(datastore.DataStore.getElement(row,att)
+							if(_instanceTable.getElement(row,att)
 								.equals(datastore.AttributeDomainTable.getElement(att,datt))
-								&& datastore.DataStore.getElement(row,datastore.AttributeDomainTable.size())
+								&& _instanceTable.getElement(row,datastore.AttributeDomainTable.size())
 								.equals(datastore.ClassDomain.getElement(dcls))){
 								count = count + 1;
 							}
@@ -88,8 +76,6 @@ public class NaiveBayes{
 		ProbabilityNB.printGeneral();
 
 	}
-	public static void mulai(){
 
-	}
 
 }
