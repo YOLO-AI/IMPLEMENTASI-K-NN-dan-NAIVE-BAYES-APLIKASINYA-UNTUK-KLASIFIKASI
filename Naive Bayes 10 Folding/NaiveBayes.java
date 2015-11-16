@@ -33,20 +33,21 @@ public class NaiveBayes{
 			}
 			ProbabilityNB.addClass(count);
 		}
-		ProbabilityNB.printClass();
 
 		//bagi jadi probabilitas, class
 		float total_class = 0;
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			total_class = total_class + ProbabilityNB.getClassProb().get(dcls);
 		}
-		System.out.println(total_class);
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			if(ProbabilityNB.getClassProb().get(dcls) != 0 && total_class != 0){
 				ProbabilityNB.getClassProb().set(dcls, ProbabilityNB.getClassProb().get(dcls) / total_class);
 			}
 		}
+		System.out.println("Model Kelas Naive Bayes:");
 		ProbabilityNB.printClass();
+		System.out.println();
+		System.out.println();
 
 		//count general
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
@@ -71,8 +72,6 @@ public class NaiveBayes{
 			}
 			ProbabilityNB.addGeneral(tempAttProb);
 		}
-		ProbabilityNB.printGeneral();
-
 		//bagi jadi probabilitas, general
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
 			for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
@@ -85,7 +84,7 @@ public class NaiveBayes{
 				}
 			}
 		}
-		System.out.println();
+		System.out.println("Model Naive Bayes:");
 		ProbabilityNB.printGeneral();
 
 	}

@@ -50,7 +50,6 @@ public class datastore{
 			}
 			if(satisfy){
 				ClassDomain.add(currentlyObserved);
-
 			}
 		}
 	}
