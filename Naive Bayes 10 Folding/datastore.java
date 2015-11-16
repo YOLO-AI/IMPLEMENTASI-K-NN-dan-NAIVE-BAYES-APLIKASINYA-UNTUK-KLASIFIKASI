@@ -1,15 +1,15 @@
-//file: datastore.java
+// file: datastore.java
 import java.util.*;
 import java.io.*;
 public class datastore{
-	public static ArrayList<String> classDomainList = new ArrayList<String>(); //list value dari kelas
+	public static classDomain ClassDomain = new classDomain();
 	/* struktur:
 		|class 	|
 		|val1 	|
 		|val2 	|
 		|val3 	|
 	*/
-	public static ArrayList<ArrayList<String>> attributeDomainList = new ArrayList<ArrayList<String>>(); //list value dari atribut-atribut
+	public static attributeDomainTable AttributeDomainTable = new attributeDomainTable();
 	/* struktur:
 		|XXXXX		|domain 1 	|domain 2	|domain 3	|dst...		|
 		|atribut 1 	|val 1 		|val 2 		|val 3 		|			|
@@ -17,7 +17,7 @@ public class datastore{
 		|atribut 3 	|val 1 		|val 2 		|val 3 		|			|
 		|dst... 	|	 		|	 		|			|			|
 	*/
-	public static ArrayList<ArrayList<String>> dataList = new ArrayList<ArrayList<String>>(); //list berisi data value atribut dan kelas
+	public static instanceTable DataStore = new instanceTable();
 	/* struktur:
 		|XXXXX	|atribut 1 	|atribut 2	|atribut 3	|dst...		|
 		|row 1 	|val 1 		|val 2 		|val 3 		|			|
@@ -25,49 +25,46 @@ public class datastore{
 		|row 3 	|val 1 		|val 2 		|val 3 		|			|
 		|dst... |	 		|	 		|			|			|
 	*/
+		
+	public static void inputInstanceDataStore(String[] tokens){
+		// menambahkan sebuah instance ke dalam DataStore
 
-	public static void inputDatalist(String[] tokens){
-		// menambahkan sebuah baris data ke dalam dataList
+		// menyalin isi tokens menjadi sebuah instance temp
+		instance temp = new instance(tokens);
 
-		// menyalin isi tokens menjadi sebuah ArrayList temp
-		ArrayList<String> temp = new ArrayList<String>(); //temp adalah list yang menyimpan value dari atr" dalam satu row
-		for (int i = 0; i < tokens.length; i++){ //looping untuk setiap atr
-    		temp.add(tokens[i]); //mengisi temp --> ini copying tokens ke temp
-       	}
-
-       	// temp ditambahkan pada dataList
-       	dataList.add(temp);
+       	// temp ditambahkan pada DataStore
+       	DataStore.add(temp);
 	}
 
-
-	public static void inputClassDomainList(){
-		int index = dataList.get(0).size();
-		for(int i = 0; i < dataList.size(); i++){
-			String currentlyObserved = dataList.get(i).get(index - 1);
+	public static void inputClassDomain(){
+		int index = DataStore.getRow(0).size();
+		for(int i = 0; i < DataStore.size(); i++){
+			String currentlyObserved = DataStore.getRow(i).getElement(index - 1);
 			boolean satisfy = true;
 			int j = 0;
-			while (j < classDomainList.size() && satisfy){
-				if (currentlyObserved.equals(classDomainList.get(j))){
+			while (j < ClassDomain.size() && satisfy){
+				if (currentlyObserved.equals(ClassDomain.getElement(j))){
 					satisfy = false;
 				}
 				j++;
 			}
 			if(satisfy){
-				classDomainList.add(currentlyObserved);
+				ClassDomain.add(currentlyObserved);
+
 			}
 		}
 	}
 
-	public static void inputAttributeDomainList(){
-		int index = dataList.get(0).size();
+	public static void inputAttributeDomainTable(){
+		int index = DataStore.getRow(0).size();
 		for(int i = 0; i < index-1; i++){
-			ArrayList<String> temp = new ArrayList<String>();
-			for(int j = 0; j < dataList.size(); j++){
-				String currentlyObserved = dataList.get(j).get(i);
+			attributeDomain temp = new attributeDomain();
+			for(int j = 0; j < DataStore.size(); j++){
+				String currentlyObserved = DataStore.getElement(j,i);
 				boolean satisfy = true;
 				int k = 0;
 				while (k < temp.size() && satisfy){
-					if (currentlyObserved.equals(temp.get(k))){
+					if (currentlyObserved.equals(temp.getElement(k))){
 						satisfy = false;
 					}
 					k++;
@@ -76,7 +73,7 @@ public class datastore{
 					temp.add(currentlyObserved);
 				}
 			}
-			attributeDomainList.add(temp);
+			AttributeDomainTable.add(temp);
 		}
 	}
 
@@ -89,29 +86,33 @@ public class datastore{
       	try{
         	// open input stream test.txt for reading purpose.
          	BufferedReader br = new BufferedReader(new FileReader(inputFile));
+         	DataStore = new instanceTable();
          	while ((thisLine = br.readLine()) != null) {
             	String delims = ",";
             	String[] tokens = thisLine.split(delims);
-            	inputDatalist(tokens); //menambahkan satu baris data ke dataList
+            	inputInstanceDataStore(tokens); //menambahkan satu baris data ke dataList
          	}       
       	}catch(Exception e){
          	e.printStackTrace();
       	}
 
-      	inputClassDomainList();
-      	for(int i = 0; i < classDomainList.size(); i++){
-      		System.out.println(classDomainList.get(i));
+      	System.out.println();
+      	inputClassDomain();
+      	System.out.println("List Kelas");
+      	for(int i = 0; i < ClassDomain.size(); i++){
+      		System.out.print(ClassDomain.getElement(i) + " ");
        	}
+       	System.out.println();
+       	System.out.println();
 
-       	inputAttributeDomainList();
-       	for(int i = 0; i < attributeDomainList.size(); i++){
-	      	for(int j = 0; j < attributeDomainList.get(i).size(); j++){
-	      		System.out.print(attributeDomainList.get(i).get(j));
+       	inputAttributeDomainTable();
+       	System.out.println("List atribut dan domainnya");
+       	for(int i = 0; i < AttributeDomainTable.size(); i++){
+	      	for(int j = 0; j < AttributeDomainTable.getRow(i).size(); j++){
+	      		System.out.print(AttributeDomainTable.getElement(i, j) + " ");
 	       	}
 	       	System.out.println();
 	    }
   	}
 
-
 }
-
