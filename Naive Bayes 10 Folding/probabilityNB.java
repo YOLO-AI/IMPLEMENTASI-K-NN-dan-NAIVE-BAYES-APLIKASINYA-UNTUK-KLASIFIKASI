@@ -18,6 +18,14 @@ public class probabilityNB{
 		classProbabilityNBList.add(value);
 	}
 
+	public ArrayList<ArrayList<ArrayList<Float>>> getGeneralProb(){
+		return generalProbabilityNBList;
+	}
+
+	public ArrayList<Float> getClassProb(){
+		return classProbabilityNBList;
+	}
+
 	public void printGeneral(){
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
 			for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
