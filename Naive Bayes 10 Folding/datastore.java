@@ -99,20 +99,15 @@ public class datastore{
       	System.out.println();
       	inputClassDomain();
       	System.out.println("List Kelas");
-      	for(int i = 0; i < ClassDomain.size(); i++){
-      		System.out.print(ClassDomain.getElement(i) + " ");
-       	}
+       	ClassDomain.printThis();
        	System.out.println();
        	System.out.println();
 
        	inputAttributeDomainTable();
        	System.out.println("List atribut dan domainnya");
-       	for(int i = 0; i < AttributeDomainTable.size(); i++){
-	      	for(int j = 0; j < AttributeDomainTable.getRow(i).size(); j++){
-	      		System.out.print(AttributeDomainTable.getElement(i, j) + " ");
-	       	}
-	       	System.out.println();
-	    }
+       	AttributeDomainTable.printThis();
+       	System.out.println();
+       	System.out.println();
   	}
 
 }

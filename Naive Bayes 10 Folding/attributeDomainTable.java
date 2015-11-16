@@ -43,6 +43,7 @@ public class attributeDomainTable{
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
 			getRow(i).printThis();
+			System.out.println();
 		}
 	}
 }
