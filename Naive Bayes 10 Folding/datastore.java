@@ -25,7 +25,7 @@ public class datastore{
 		|row 3 	|val 1 		|val 2 		|val 3 		|			|
 		|dst... |	 		|	 		|			|			|
 	*/
-		
+
 	public static void inputInstanceDataStore(String[] tokens){
 		// menambahkan sebuah instance ke dalam DataStore
 
@@ -77,7 +77,7 @@ public class datastore{
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void mulai() throws Exception {
     	System.out.print("Input file name: ");
     	Scanner scan = new Scanner(System.in);
     	String inputFile = scan.nextLine();
