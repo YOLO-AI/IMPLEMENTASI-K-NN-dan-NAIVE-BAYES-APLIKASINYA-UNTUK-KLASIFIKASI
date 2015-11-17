@@ -42,7 +42,7 @@ public class classDomain{
 
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
-			System.out.print(getElement(i) + ",");
+			System.out.print(getElement(i) + " ");
 		}
 	}
 }

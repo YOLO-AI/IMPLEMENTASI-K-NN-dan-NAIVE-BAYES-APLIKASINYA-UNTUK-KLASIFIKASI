@@ -3,10 +3,51 @@ import java.util.*;
 import java.io.*;
 public class tenFoldCrossValidationNB{
 	public static probabilityNB[] TenProbabilityNB = new probabilityNB[10];
-	public static instanceTable[] TenInstanceTable = new instanceTable[10];
+	public static instanceTable[] TenDataTraining = new instanceTable[10];
+	public static instanceTable[] TenDataTest = new instanceTable[10];
 	public tenFoldCrossValidationNB(){
 		TenProbabilityNB = new probabilityNB[10];
 	}
+	public static void shuffle(instanceTable tempInstanceTable){
+		Random randomGenerator = new Random();
+		for(int index = tempInstanceTable.size()-1; index >= 0; index--){
+			int shuffleIndex = randomGenerator.nextInt(index+1);
+			instance tempInstance = new instance();
+			tempInstance = tempInstanceTable.getRow(index);
+			tempInstanceTable.set(index, tempInstanceTable.getRow(shuffleIndex));
+			tempInstanceTable.set(shuffleIndex, tempInstance);
+		}
+	}
+	public static void divideTen(instanceTable tempInstanceTable){
+		int partition = tempInstanceTable.size() / 10; //lebih kecil kayanya
+		for(int i = 0; i < 10; i++){
+			TenDataTest[i] = new instanceTable();
+			TenDataTraining[i] = new instanceTable();
+		}
+		for(int i = 0; i < 9; i++){
+			for (int j = 0; j < partition; j++){				
+				TenDataTest[i].add(tempInstanceTable.getRow((j + i*partition)));
+			}
+			for (int j = 0; j < tempInstanceTable.size() - partition; j++){
+				TenDataTraining[i].add(tempInstanceTable.getRow((j + i*partition)%tempInstanceTable.size()));
+			}		}
+		for (int j = 0; j < partition; j++){
+			TenDataTraining[9].add(tempInstanceTable.getRow(j + 9*partition));
+		}
+		for (int j = 0; j < tempInstanceTable.size() - partition; j++){				
+			TenDataTest[9].add(tempInstanceTable.getRow((j + 9*partition)%tempInstanceTable.size()));
+		}
+	}
+
+	public static void makeModelNB(){
+		for(int i = 0; i < 10; i++){
+			NaiveBayes _NaiveBayes = new NaiveBayes();
+			_NaiveBayes.makeModel(TenDataTraining[i]);
+		}
+	}
+
+	//public static void 
+
 	public static void mulai(){
 		instanceTable tempInstanceTable = new instanceTable();
 		for (int row = 0; row < datastore.DataStore.size(); row++){
@@ -16,23 +57,14 @@ public class tenFoldCrossValidationNB{
 			}
 			tempInstanceTable.add(tempInstance);
 		}
+		//shuffle
+		shuffle(tempInstanceTable);
 
 		//bagi sepuluh
-		int partition = tempInstanceTable.size() / 10; //lebih kecil kayanya
-		Random randomGenerator = new Random();
-		for(int i = 0; i < 9; i++){
-			for (int j = 0; j < partition; j++){
-				TenInstanceTable[i] = new instanceTable();
-				int index = randomGenerator.nextInt(tempInstanceTable.size());
-				System.out.println("index" + index);
-				System.out.println("size" + tempInstanceTable.size());
-				instance foo = new instance();
-				TenInstanceTable[i].add(tempInstanceTable.getRow(index));
-				tempInstanceTable.instanceTableList.remove(index);
-			}
-		}
-		TenInstanceTable[9] = tempInstanceTable;
-
-		//Naive Bayes 10 kali:) kerjain abis latihan yha:) semangat:) bismillah:) rapiin kodingan juga yah :3
+		divideTen(tempInstanceTable);
+		
+		//membuat model
+		makeModelNB();
+		
 	}
 }

@@ -2,13 +2,13 @@
 public class Main{
 	public static void main(String[] args) throws Exception{
 		datastore Datastore = new datastore();
-		Datastore.mulai();
+		Datastore.inputDatastore();
 
 		tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
 		TenFoldCrossValidationNB.mulai();
 
 		probabilityNB ProbabilityNB = new probabilityNB();
-		NaiveBayes _NaiveBayes = new NaiveBayes(datastore.DataStore, ProbabilityNB);
-
+		NaiveBayes _NaiveBayes = new NaiveBayes();
+		ProbabilityNB = _NaiveBayes.makeModel(datastore.DataStore);
 	}
 }

@@ -76,7 +76,17 @@ public class datastore{
 		}
 	}
 
-	public static void mulai() throws Exception {
+	public static void printClass(){
+		System.out.println("Kelas-Kelas Klasifikasi:");
+       	ClassDomain.printThis();
+	}
+
+	public static void printAttribute(){
+		System.out.println("Atribut-Atribut dan Domainnya:");
+       	AttributeDomainTable.printThis();
+	}
+
+	public static void inputDatastore() throws Exception {
     	System.out.print("Input file name: ");
     	Scanner scan = new Scanner(System.in);
     	String inputFile = scan.nextLine();
@@ -97,14 +107,12 @@ public class datastore{
 
       	System.out.println();
       	inputClassDomain();
-      	System.out.println("List Kelas");
-       	ClassDomain.printThis();
+      	printClass();
+      	System.out.println();
        	System.out.println();
-       	System.out.println();
-
+      	
        	inputAttributeDomainTable();
-       	System.out.println("List atribut dan domainnya");
-       	AttributeDomainTable.printThis();
+       	printAttribute();
        	System.out.println();
        	System.out.println();
   	}

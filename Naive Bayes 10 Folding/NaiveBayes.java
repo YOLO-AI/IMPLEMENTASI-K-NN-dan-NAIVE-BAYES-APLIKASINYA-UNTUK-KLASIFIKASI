@@ -6,8 +6,8 @@ public class NaiveBayes{
 	public NaiveBayes(){
 	}
 
-	public NaiveBayes(instanceTable _instanceTable, probabilityNB ProbabilityNB){
-		ProbabilityNB = new probabilityNB();
+	public probabilityNB makeModel(instanceTable _instanceTable){
+		probabilityNB ProbabilityNB = new probabilityNB();
 
 		//count class
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
@@ -34,7 +34,6 @@ public class NaiveBayes{
 		}
 		System.out.println("Model Kelas Naive Bayes:");
 		ProbabilityNB.printClass();
-		System.out.println();
 		System.out.println();
 
 		//count general
@@ -68,12 +67,15 @@ public class NaiveBayes{
 					total_prob = total_prob + ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls);
 				}
 				for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
+					if(ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls) != 0 && total_prob != 0)
 					ProbabilityNB.getGeneralProb().get(att).get(datt).set(dcls, ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls) / total_prob);
 				}
 			}
 		}
 		System.out.println("Model Naive Bayes:");
 		ProbabilityNB.printGeneral();
+
+		return ProbabilityNB;
 
 	}
 

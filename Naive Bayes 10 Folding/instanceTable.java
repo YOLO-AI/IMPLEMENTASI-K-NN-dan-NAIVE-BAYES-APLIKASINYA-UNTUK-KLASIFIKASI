@@ -24,6 +24,10 @@ public class instanceTable{
        	}
 	}
 
+	public void set(int index, instance value){
+		instanceTableList.set(index, value);
+	}
+
 	public instance getRow(int row){
 		return instanceTableList.get(row);
 	}
@@ -43,6 +47,7 @@ public class instanceTable{
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
 			getRow(i).printThis();
+			System.out.println();
 		}
 	}
 }
