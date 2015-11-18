@@ -6,9 +6,5 @@ public class Main{
 
 		tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
 		TenFoldCrossValidationNB.mulai();
-
-		probabilityNB ProbabilityNB = new probabilityNB();
-		NaiveBayes _NaiveBayes = new NaiveBayes();
-		ProbabilityNB = _NaiveBayes.makeModel(datastore.DataStore);
 	}
 }

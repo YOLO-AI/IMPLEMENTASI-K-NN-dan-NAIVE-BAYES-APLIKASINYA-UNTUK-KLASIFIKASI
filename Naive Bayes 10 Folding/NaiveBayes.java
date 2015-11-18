@@ -1,40 +1,40 @@
-//file: NaiveBayes.java
+//file: naiveBayes.java
 import java.util.*;
 import java.io.*;
-public class NaiveBayes{
+public class naiveBayes{
+	public ArrayList<Float> classProbabilityModel;
+	public ArrayList<ArrayList<ArrayList<Float>>> generalProbabilityModel; // (row,att,class)
+	public float accuracy; //akurasi model Naive Bayes
 
-	public NaiveBayes(){
+	public naiveBayes(){
+		classProbabilityModel = new ArrayList<Float>();
+		generalProbabilityModel = new ArrayList<ArrayList<ArrayList<Float>>>();
 	}
 
-	public probabilityNB makeModel(instanceTable _instanceTable){
-		probabilityNB ProbabilityNB = new probabilityNB();
-
+	public void makeModel(instanceTable DataTraining){
 		//count class
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			float count = 0;
 			//iterasi seluruh DataStore
-			for(int row = 0; row < _instanceTable.size(); row++){
-				if(_instanceTable.getElement(row,datastore.AttributeDomainTable.size())
+			for(int row = 0; row < DataTraining.size(); row++){
+				if(DataTraining.getElement(row,datastore.AttributeDomainTable.size())
 					.equals(datastore.ClassDomain.getElement(dcls))){
 					count = count + 1;
 				}
 			}
-			ProbabilityNB.addClass(count);
+			classProbabilityModel.add(count);
 		}
 
 		//bagi jadi probabilitas, class
 		float total_class = 0;
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
-			total_class = total_class + ProbabilityNB.getClassProb().get(dcls);
+			total_class = total_class + classProbabilityModel.get(dcls);
 		}
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
-			if(ProbabilityNB.getClassProb().get(dcls) != 0 && total_class != 0){
-				ProbabilityNB.getClassProb().set(dcls, ProbabilityNB.getClassProb().get(dcls) / total_class);
+			if(classProbabilityModel.get(dcls) != 0 && total_class != 0){
+				classProbabilityModel.set(dcls, classProbabilityModel.get(dcls) / total_class);
 			}
 		}
-		System.out.println("Model Kelas Naive Bayes:");
-		ProbabilityNB.printClass();
-		System.out.println();
 
 		//count general
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
@@ -44,11 +44,11 @@ public class NaiveBayes{
 				for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 					float count = 0;
 					//iterasi seluruh DataStore
-					for(int row = 0; row < _instanceTable.size(); row++){
+					for(int row = 0; row < DataTraining.size(); row++){
 						
-							if(_instanceTable.getElement(row,att)
+							if(DataTraining.getElement(row,att)
 								.equals(datastore.AttributeDomainTable.getElement(att,datt))
-								&& _instanceTable.getElement(row,datastore.AttributeDomainTable.size())
+								&& DataTraining.getElement(row,datastore.AttributeDomainTable.size())
 								.equals(datastore.ClassDomain.getElement(dcls))){
 								count = count + 1;
 							}
@@ -57,27 +57,71 @@ public class NaiveBayes{
 				}
 				tempAttProb.add(tempDattProb);
 			}
-			ProbabilityNB.addGeneral(tempAttProb);
+			generalProbabilityModel.add(tempAttProb);
 		}
 		//bagi jadi probabilitas, general
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
 			for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 				float total_prob = 0;
 				for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
-					total_prob = total_prob + ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls);
+					total_prob = total_prob + generalProbabilityModel.get(att).get(datt).get(dcls);
 				}
 				for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
-					if(ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls) != 0 && total_prob != 0)
-					ProbabilityNB.getGeneralProb().get(att).get(datt).set(dcls, ProbabilityNB.getGeneralProb().get(att).get(datt).get(dcls) / total_prob);
+					if(generalProbabilityModel.get(att).get(datt).get(dcls) != 0 && total_prob != 0)
+					generalProbabilityModel.get(att).get(datt).set(dcls, generalProbabilityModel.get(att).get(datt).get(dcls) / total_prob);
 				}
 			}
 		}
-		System.out.println("Model Naive Bayes:");
-		ProbabilityNB.printGeneral();
+	}
 
-		return ProbabilityNB;
+	public void calculateAccuracy(instanceTable DataTest){
+		//calculate Accuracy di sini;
+		//accuracy = hitung;
+		//masukannya data yang digunakan untuk test. modelnya udah ada di variabel (lokal) generalProbabilityModel
 
 	}
+
+	public void printClass(){
+		System.out.println("Model Probabilitas per Kelas:");
+		for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+			System.out.print(classProbabilityModel.get(dcls) + " ");
+		}
+		System.out.println();
+	}
+
+	public void printGeneral(){
+		System.out.println("Model Probabilitas Keseluruhan:");
+		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
+			for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
+				for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+					System.out.print(generalProbabilityModel.get(att).get(datt).get(dcls) + " ");
+				}
+				System.out.print(" | ");
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
+
+	public void printAccuracy(){
+		System.out.println("Akurasi Model Probabilitas:");
+		System.out.println(accuracy);
+	}
+
+	public void printThis(){
+		printClass();
+		System.out.println();
+		printGeneral();
+		//System.out.println();
+		printAccuracy();
+	}
+
+	public void mulai(instanceTable DataTraining, instanceTable DataTest){
+		makeModel(DataTraining);
+		calculateAccuracy(DataTest);
+	}
+
+
 
 
 }

@@ -2,11 +2,18 @@
 import java.util.*;
 import java.io.*;
 public class tenFoldCrossValidationNB{
-	public static probabilityNB[] TenProbabilityNB = new probabilityNB[10];
+	public static naiveBayes[] TenNaiveBayes = new naiveBayes[10];
 	public static instanceTable[] TenDataTraining = new instanceTable[10];
 	public static instanceTable[] TenDataTest = new instanceTable[10];
 	public tenFoldCrossValidationNB(){
-		TenProbabilityNB = new probabilityNB[10];
+		TenNaiveBayes = new naiveBayes[10];
+		TenDataTraining = new instanceTable[10];
+		TenDataTest = new instanceTable[10];
+		for(int i = 0; i < 10; i++){
+			TenNaiveBayes[i] = new naiveBayes();
+			TenDataTraining[i] = new instanceTable();
+			TenDataTest[i] = new instanceTable();
+		}
 	}
 	public static void shuffle(instanceTable tempInstanceTable){
 		Random randomGenerator = new Random();
@@ -39,14 +46,22 @@ public class tenFoldCrossValidationNB{
 		}
 	}
 
-	public static void makeModelNB(){
+	public static void doNaiveBayes(){
 		for(int i = 0; i < 10; i++){
-			NaiveBayes _NaiveBayes = new NaiveBayes();
-			_NaiveBayes.makeModel(TenDataTraining[i]);
+			TenNaiveBayes[i] = new naiveBayes();
+			TenNaiveBayes[i].makeModel(TenDataTraining[i]);
+			TenNaiveBayes[i].calculateAccuracy(TenDataTest[i]);
 		}
 	}
 
-	//public static void 
+	public static void printNB(){
+		for(int i = 0; i < 10; i++){
+			System.out.println("*** Ten Fold Cross Validation ke-" + (i+1) + " ***");
+			TenNaiveBayes[i].printThis();
+			System.out.println();
+		}
+		System.out.println();
+	}
 
 	public static void mulai(){
 		instanceTable tempInstanceTable = new instanceTable();
@@ -63,8 +78,14 @@ public class tenFoldCrossValidationNB{
 		//bagi sepuluh
 		divideTen(tempInstanceTable);
 		
-		//membuat model
-		makeModelNB();
+		//doNB
+		doNaiveBayes();
+
+		//cetak ke layar semua hasil NB
+		printNB();
+
+
+
 		
 	}
 }
