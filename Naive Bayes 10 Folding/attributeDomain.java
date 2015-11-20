@@ -20,8 +20,8 @@ public class attributeDomain{
 	public void setAttributeDomainList(String[] values){
 		attributeDomainList = new ArrayList<String>();
 		for (int i = 0; i < values.length; i++){
-    		attributeDomainList.add(values[i]);
-       	}
+                attributeDomainList.add(values[i]);
+        }
 	}
 
 	public int size(){

@@ -2,9 +2,10 @@
 import java.util.*;
 import java.io.*;
 public class tenFoldCrossValidationNB{
-	public static naiveBayes[] TenNaiveBayes = new naiveBayes[10];
-	public static instanceTable[] TenDataTraining = new instanceTable[10];
-	public static instanceTable[] TenDataTest = new instanceTable[10];
+	public static naiveBayes[] TenNaiveBayes;
+	public static instanceTable[] TenDataTraining;
+	public static instanceTable[] TenDataTest;
+        
 	public tenFoldCrossValidationNB(){
 		TenNaiveBayes = new naiveBayes[10];
 		TenDataTraining = new instanceTable[10];
@@ -50,6 +51,7 @@ public class tenFoldCrossValidationNB{
 		for(int i = 0; i < 10; i++){
 			TenNaiveBayes[i] = new naiveBayes();
 			TenNaiveBayes[i].makeModel(TenDataTraining[i]);
+                        TenNaiveBayes[i].classify(TenDataTest[i]);
 			TenNaiveBayes[i].calculateAccuracy(TenDataTest[i]);
 		}
 	}

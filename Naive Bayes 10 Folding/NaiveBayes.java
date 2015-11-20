@@ -1,11 +1,12 @@
 //file: naiveBayes.java
 import java.util.*;
-import java.io.*;
+
 public class naiveBayes{
 	public ArrayList<Float> classProbabilityModel;
 	public ArrayList<ArrayList<ArrayList<Float>>> generalProbabilityModel; // (row,att,class)
 	public float accuracy; //akurasi model Naive Bayes
-
+        public String[] solution;
+        
 	public naiveBayes(){
 		classProbabilityModel = new ArrayList<Float>();
 		generalProbabilityModel = new ArrayList<ArrayList<ArrayList<Float>>>();
@@ -45,13 +46,12 @@ public class naiveBayes{
 					float count = 0;
 					//iterasi seluruh DataStore
 					for(int row = 0; row < DataTraining.size(); row++){
-						
-							if(DataTraining.getElement(row,att)
-								.equals(datastore.AttributeDomainTable.getElement(att,datt))
-								&& DataTraining.getElement(row,datastore.AttributeDomainTable.size())
-								.equals(datastore.ClassDomain.getElement(dcls))){
-								count = count + 1;
-							}
+                                                if(DataTraining.getElement(row,att)
+                                                        .equals(datastore.AttributeDomainTable.getElement(att,datt))
+                                                        && DataTraining.getElement(row,datastore.AttributeDomainTable.size())
+                                                        .equals(datastore.ClassDomain.getElement(dcls))){
+                                                        count = count + 1;
+                                                }
 					}
 					tempDattProb.add(count);
 				}
@@ -74,11 +74,56 @@ public class naiveBayes{
 		}
 	}
 
+        public void classify(instanceTable DataTest){
+            //Array of string berisi nama kelas yang dihasilkan setelah dilakukan Naive Bayes
+            solution = new String[DataTest.size()];
+            float[] classProb = new float[datastore.ClassDomain.size()];
+            
+            //Inisialisasi dengan probabilitas per domain kelas
+            //Klasifikasi kelas setiap instance pada DataTest
+            for(int i=0; i<DataTest.size(); i++){
+                    for(int k=0; k<datastore.ClassDomain.size(); k++){
+                            classProb[k] = classProbabilityModel.get(k);
+                    }
+                    //Klasifikasi kelas terhadap instance ke-i di DataTest
+                    for(int j=0; j<(DataTest.getRow(i).size()-1); j++){
+                            String attribute = DataTest.getRow(i).getElement(j);
+                            //Cari indeks atribut
+                            int dattIndex=0;
+                            String domainAtt = datastore.AttributeDomainTable.getElement(j, dattIndex);
+                            while(!(attribute.equals(domainAtt))){
+                                    dattIndex++;
+                                    domainAtt = datastore.AttributeDomainTable.getElement(j, dattIndex);
+                            }
+                            
+                            //Kalikan dari model probabilitas
+                            for(int k=0; k<datastore.ClassDomain.size(); k++){
+                                    classProb[k] *= generalProbabilityModel.get(j).get(dattIndex).get(k);
+                            }
+                    }
+                    
+                    int maxIndex = 0;
+                    float max = classProb[0];
+                    for (int k=1; k<classProb.length; k++){
+                            //belum tau harus '>=' atau '>'
+                            if(classProb[k] > max){
+                                    max = classProb[k];
+                                    maxIndex = k;
+                            }
+                    }
+                    solution[i] = datastore.ClassDomain.getElement(maxIndex);
+            }
+        }
+        
 	public void calculateAccuracy(instanceTable DataTest){
-		//calculate Accuracy di sini;
-		//accuracy = hitung;
-		//masukannya data yang digunakan untuk test. modelnya udah ada di variabel (lokal) generalProbabilityModel
-
+                int count = 0;
+                for(int i=0; i<DataTest.size(); i++){
+                    String realClass = datastore.DataStore.getElement(i, datastore.DataStore.getRow(i).size()-1);
+                    if(realClass.equals(solution[i])){
+                        count++;
+                    }
+                }
+                accuracy = (float) count / DataTest.size();
 	}
 
 	public void printClass(){
@@ -112,16 +157,14 @@ public class naiveBayes{
 		printClass();
 		System.out.println();
 		printGeneral();
-		//System.out.println();
 		printAccuracy();
+                System.out.println();
 	}
 
 	public void mulai(instanceTable DataTraining, instanceTable DataTest){
 		makeModel(DataTraining);
-		calculateAccuracy(DataTest);
+                classify(DataTest);
+                calculateAccuracy(DataTest);
+                printThis();
 	}
-
-
-
-
 }

@@ -1,7 +1,4 @@
 //file: naiveBayes.java
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
-import java.util.*;
-import java.io.*;
 
 public class kNN {
 
@@ -122,9 +119,4 @@ public class kNN {
         System.out.print("Akurasi Model Probabilitas:");
         System.out.println(accuracy*100 + "%");
     }
-
-    public void mulai(instanceTable DataTraining, instanceTable DataTest) {
-        //carcalculateAccuracy(DataTest);
-    }
-
 }

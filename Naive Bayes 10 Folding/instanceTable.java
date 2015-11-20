@@ -9,6 +9,13 @@ public class instanceTable{
 	public instanceTable(){
 		instanceTableList = new ArrayList<instance>();
 	}
+        
+        public instanceTable(instanceTable sumber) {
+                instanceTableList = new ArrayList<instance>();
+                for (int i = 0; i < sumber.size(); i++) {
+                        instanceTableList.add(sumber.getRow(i));
+                }
+        }
 
 	public instanceTable(instance[] values){
 		instanceTableList = new ArrayList<instance>();
