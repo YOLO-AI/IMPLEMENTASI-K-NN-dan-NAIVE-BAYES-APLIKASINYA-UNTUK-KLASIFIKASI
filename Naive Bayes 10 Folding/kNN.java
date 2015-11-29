@@ -4,7 +4,6 @@ public class kNN {
 
     public float accuracy;
     public instanceTable dataTest, dataTraining;
-    public datastore DataStore;
     public String[] trueAns, preAns;
     public int[] jarak ;
     public boolean[] flagjarak ;
@@ -13,16 +12,15 @@ public class kNN {
     public int[] arrklasifikasi ;
     public int countpredicted;
 
-    public kNN(instanceTable datatest, instanceTable datatraining, datastore DataStore, int k) {
+    public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
         this.k = k;
-        this.DataStore = DataStore;
         trueAns=new String[dataTest.size()];
         preAns=new String[dataTest.size()];
         jarak= new int[dataTest.size()];
         flagjarak= new boolean[dataTest.size()];
-        arrklasifikasi= new int[DataStore.ClassDomain.classDomainList.size()];
+        arrklasifikasi= new int[datastore.ClassDomain.classDomainList.size()];
         indexjawab = new int[k];
 
         for (int i = 0; i < datatraining.size(); i++) {
@@ -39,7 +37,7 @@ public class kNN {
                     indmaxklas=j;
                 }
             }
-            preAns[i]=DataStore.ClassDomain.getElement(indmaxklas);   
+            preAns[i]=datastore.ClassDomain.getElement(indmaxklas);   
         }
         calculateAccuracy();
     }
@@ -51,7 +49,7 @@ public class kNN {
     }
 
     public void inisialisasiarrklasifikasi() {
-        for (int i = 0; i < DataStore.ClassDomain.classDomainList.size(); i++) {
+        for (int i = 0; i < datastore.ClassDomain.classDomainList.size(); i++) {
             arrklasifikasi[i] = 0;
         }
     }
@@ -88,8 +86,8 @@ public class kNN {
     public void isiklasifikasi() {
         //dari k isi array klasifikasi
         for (int i = 0; i < k; i++) {
-            for (int j = 0; j < DataStore.ClassDomain.classDomainList.size(); j++) {
-                if (dataTraining.getElement(indexjawab[i], dataTraining.getRow(i).size() - 1).equals(DataStore.ClassDomain.getElement(j))) {
+            for (int j = 0; j < datastore.ClassDomain.classDomainList.size(); j++) {
+                if (dataTraining.getElement(indexjawab[i], dataTraining.getRow(i).size() - 1).equals(datastore.ClassDomain.getElement(j))) {
                     arrklasifikasi[j]++;
                 }
             }

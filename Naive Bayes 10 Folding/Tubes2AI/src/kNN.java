@@ -1,13 +1,12 @@
+
+import static java.lang.Integer.min;
+
 //file: naiveBayes.java
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
-import java.util.*;
-import java.io.*;
 
 public class kNN {
 
     public float accuracy;
     public instanceTable dataTest, dataTraining;
-    public datastore DataStore;
     public String[] trueAns, preAns;
     public int[] jarak ;
     public boolean[] flagjarak ;
@@ -16,45 +15,45 @@ public class kNN {
     public int[] arrklasifikasi ;
     public int countpredicted;
 
-    public kNN(instanceTable datatest, instanceTable datatraining, datastore DataStore, int k) {
+    public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
-        this.k = k;
-        this.DataStore = DataStore;
+        this.k = min(k,dataTraining.size());
         trueAns=new String[dataTest.size()];
         preAns=new String[dataTest.size()];
-        jarak= new int[dataTest.size()];
-        flagjarak= new boolean[dataTest.size()];
-        arrklasifikasi= new int[DataStore.ClassDomain.classDomainList.size()];
-        indexjawab = new int[k];
+        jarak= new int[dataTraining.size()];
+        flagjarak= new boolean[dataTraining.size()];
+        arrklasifikasi= new int[datastore.ClassDomain.classDomainList.size()];
+        indexjawab = new int[this.k];
 
-        for (int i = 0; i < datatraining.size(); i++) {
+        for (int i = 0; i < dataTest.size(); i++) {
             inisialisasiflag();
             inisialisasiarrklasifikasi();
-            isiJarak(datatest.getRow(i));
+            isiJarak(dataTest.getRow(i));
             sortJarak();
             isiklasifikasi();
             int maxklas=0;
             int indmaxklas=0;
-            for (int j =0;j<k - 1;j++){
+            for (int j =0;j < datastore.ClassDomain.classDomainList.size() ;j++){
                 if (maxklas<arrklasifikasi[j]){
                     maxklas=arrklasifikasi[j];
                     indmaxklas=j;
                 }
             }
-            preAns[i]=DataStore.ClassDomain.getElement(indmaxklas);   
+            preAns[i]=datastore.ClassDomain.getElement(indmaxklas);   
         }
         calculateAccuracy();
     }
 
     public void inisialisasiflag() {
-        for (int i = 0; i < dataTest.size(); i++) {
+        for (int i = 0; i < dataTraining.size(); i++) {
             flagjarak[i] = false;
         }
     }
 
+    
     public void inisialisasiarrklasifikasi() {
-        for (int i = 0; i < DataStore.ClassDomain.classDomainList.size(); i++) {
+        for (int i = 0; i < datastore.ClassDomain.classDomainList.size(); i++) {
             arrklasifikasi[i] = 0;
         }
     }
@@ -74,9 +73,13 @@ public class kNN {
     public void sortJarak() {
         //ambil k index dengan jarak terkecil
         for (int i = 0; i < k; i++) {
-            int min = jarak[0];
-            int indexmin = 0;
-            for (int j = 1; j < dataTraining.size(); j++) {
+            int a=0;
+            while (flagjarak[a]==true){
+                a++;
+            }
+            int min = jarak[a];
+            int indexmin = a;
+            for (int j = 0; j < dataTraining.size(); j++) {
                 if (min > jarak[j] && flagjarak[j] == false) {
                     min = jarak[j];
                     indexmin = j;
@@ -91,8 +94,8 @@ public class kNN {
     public void isiklasifikasi() {
         //dari k isi array klasifikasi
         for (int i = 0; i < k; i++) {
-            for (int j = 0; j < DataStore.ClassDomain.classDomainList.size(); j++) {
-                if (dataTraining.getElement(indexjawab[i], dataTraining.getRow(i).size() - 1).equals(DataStore.ClassDomain.getElement(j))) {
+            for (int j = 0; j < datastore.ClassDomain.classDomainList.size(); j++) {
+                if (dataTraining.getElement(indexjawab[i], dataTraining.getRow(i).size() - 1).equals(datastore.ClassDomain.getElement(j))) {
                     arrklasifikasi[j]++;
                 }
             }
@@ -103,13 +106,11 @@ public class kNN {
         countpredicted = 0;
         int j;
         for ( j = 0; j < dataTest.size(); j++) {
-            if (dataTraining.getElement(j, dataTraining.getRow(j).size() - 1).equals(preAns[j])) {
+            if (dataTest.getElement(j, dataTest.getRow(j).size() - 1).equals(preAns[j])) {
                 countpredicted += 1;
             }
         }
-        System.out.println(countpredicted);
-        System.out.println(j);
-        accuracy = (float) ((float)countpredicted / j);       
+        accuracy = (float) ((float)countpredicted / j); 
     }
     
     public void printklasifikasi(){
@@ -122,9 +123,4 @@ public class kNN {
         System.out.print("Akurasi Model Probabilitas:");
         System.out.println(accuracy*100 + "%");
     }
-
-    public void mulai(instanceTable DataTraining, instanceTable DataTest) {
-        //carcalculateAccuracy(DataTest);
-    }
-
 }
