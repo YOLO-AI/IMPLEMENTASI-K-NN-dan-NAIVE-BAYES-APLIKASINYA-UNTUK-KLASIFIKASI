@@ -90,25 +90,16 @@ public class datastore{
     	System.out.print("Input file name: ");
     	Scanner scan = new Scanner(System.in);
     	String inputFile = scan.nextLine();
-        String separator = "\\.";
-        String[] fileName = inputFile.split(separator);
-        for(int i=0; i<fileName.length; i++){
-            System.out.println(fileName[i]);
-        }
+
       	String thisLine = null;
       	try{
         	// open input stream test.txt for reading purpose.
          	BufferedReader br = new BufferedReader(new FileReader(inputFile));
          	DataStore = new instanceTable();
-         	thisLine = br.readLine();
-                while(!thisLine.equals("@data")){
-                    thisLine = br.readLine();
-                }
-                
-                while ((thisLine = br.readLine()) != null) {
-                        String delims = ",";
-                        String[] tokens = thisLine.split(delims);
-                        inputInstanceDataStore(tokens); //menambahkan satu baris data ke dataList
+         	while ((thisLine = br.readLine()) != null) {
+            	String delims = ",";
+            	String[] tokens = thisLine.split(delims);
+            	inputInstanceDataStore(tokens); //menambahkan satu baris data ke dataList
          	}       
       	}catch(Exception e){
          	e.printStackTrace();
