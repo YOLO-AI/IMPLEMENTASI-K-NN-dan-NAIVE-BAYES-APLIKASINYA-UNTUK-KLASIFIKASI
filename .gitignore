@@ -1,4 +1,9 @@
 /build/
 /dist/
 /nbproject/
+<<<<<<< HEAD
 build.xml
+=======
+/Tubes2AI/nbproject/private/
+/Tubes2AI/build/
+>>>>>>> 047232e5ae6a907ee75c472dd6969ef67ef558fb
