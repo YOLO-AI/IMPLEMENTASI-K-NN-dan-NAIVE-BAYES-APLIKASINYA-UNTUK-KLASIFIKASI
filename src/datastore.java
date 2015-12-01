@@ -2,6 +2,7 @@
 import java.util.*;
 import java.io.*;
 public class datastore{
+    private int Size = 100;
 	public static classDomain ClassDomain = new classDomain();
 	/* struktur:
 		|class 	|
@@ -9,6 +10,9 @@ public class datastore{
 		|val2 	|
 		|val3 	|
 	*/
+        
+        public static String dataName;
+        
 	public static attributeDomainTable AttributeDomainTable = new attributeDomainTable();
 	/* struktur:
 		|XXXXX		|domain 1 	|domain 2	|domain 3	|dst...		|
@@ -35,7 +39,7 @@ public class datastore{
        	// temp ditambahkan pada DataStore
        	DataStore.add(temp);
 	}
-
+        /*
 	public static void inputClassDomain(){
 		int index = DataStore.getRow(0).size();
 		for(int i = 0; i < DataStore.size(); i++){
@@ -52,9 +56,9 @@ public class datastore{
 				ClassDomain.add(currentlyObserved);
 			}
 		}
-	}
+	}*/
 
-	public static void inputAttributeDomainTable(){
+	/*public static void inputAttributeDomainTable(){
 		int index = DataStore.getRow(0).size();
 		for(int i = 0; i < index-1; i++){
 			attributeDomain temp = new attributeDomain();
@@ -74,7 +78,7 @@ public class datastore{
 			}
 			AttributeDomainTable.add(temp);
 		}
-	}
+	}*/
 
 	public static void printClass(){
 		System.out.println("Kelas-Kelas Klasifikasi:");
@@ -85,7 +89,7 @@ public class datastore{
 		System.out.println("Atribut-Atribut dan Domainnya:");
        	AttributeDomainTable.printThis();
 	}
-
+        
 	public static void inputDatastore(String namafile) throws Exception {
     	//System.out.print("Input file name: ");
     	Scanner scan = new Scanner(namafile);
@@ -97,14 +101,36 @@ public class datastore{
         	// open input stream test.txt for reading purpose.
          	BufferedReader br = new BufferedReader(new FileReader(inputFile));
          	DataStore = new instanceTable();
+                int size = 50;
          	/*while ((thisLine = br.readLine()) != null) {
             	String delims = ",";
             	String[] tokens = thisLine.split(delims);
             	inputInstanceDataStore(tokens); //menambahkan satu baris data ke dataList*/
                 thisLine = br.readLine();
+                int i = 0;
                 while(!thisLine.equals("@data")){
+                    String[] temp = thisLine.split(",\\ | \\{| |}");
+                    if (temp[0].equals("@relation")){
+                        dataName = temp[1];
+                    } else if (temp[0].equals("@attribute")){
+                        AttributeDomainTable.attributeName.add(temp[1]);
+                        attributeDomain attDomTemp = new attributeDomain();
+                        for (int j = 2; j < temp.length; j++){
+                            attDomTemp.add(temp[j]);
+                        }
+                        AttributeDomainTable.add(attDomTemp);
+                        i++;
+                    }
                     thisLine = br.readLine();
-         	}    
+         	}
+                //input class domain
+                int lastIndex = AttributeDomainTable.size()-1;
+                for(int j = 0; j < AttributeDomainTable.getRow(lastIndex).size(); j++){
+                    ClassDomain.add(AttributeDomainTable.getElement(lastIndex, j));
+                }
+                AttributeDomainTable.attributeName.remove(lastIndex);
+                AttributeDomainTable.remove(lastIndex);
+                //
                 
                 while((thisLine = br.readLine()) != null){
                     String delims = ",";
@@ -116,12 +142,10 @@ public class datastore{
       	}
 
       	System.out.println();
-      	inputClassDomain();
       	printClass();
       	System.out.println();
        	System.out.println();
       	
-       	inputAttributeDomainTable();
        	printAttribute();
        	System.out.println();
        	System.out.println();

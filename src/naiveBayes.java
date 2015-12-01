@@ -129,7 +129,8 @@ public class naiveBayes{
 	public void printClass(){
 		System.out.println("Model Probabilitas per Kelas:");
 		for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
-			System.out.print(classProbabilityModel.get(dcls) + " ");
+                        System.out.printf("%.3f", classProbabilityModel.get(dcls));
+			System.out.print(" ");
 		}
 		System.out.println();
 	}
@@ -137,9 +138,11 @@ public class naiveBayes{
 	public void printGeneral(){
 		System.out.println("Model Probabilitas Keseluruhan:");
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
+                        System.out.print(datastore.AttributeDomainTable.attributeName.get(att)+" ");
 			for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
 				for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
-					System.out.print(generalProbabilityModel.get(att).get(datt).get(dcls) + " ");
+                                        System.out.printf("%.3f", generalProbabilityModel.get(att).get(datt).get(dcls));
+					System.out.print(" ");
 				}
 				System.out.print(" | ");
 			}

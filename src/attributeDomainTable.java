@@ -5,6 +5,7 @@ public class attributeDomainTable{
 	// kelas ini merepresentasikan struktur data sebuah table atribut domain
 
 	public ArrayList<attributeDomain> attributeDomainTableList;
+        public ArrayList<String> attributeName = new ArrayList<String>();
 
 	public attributeDomainTable(){
 		attributeDomainTableList = new ArrayList<attributeDomain>();
@@ -14,7 +15,7 @@ public class attributeDomainTable{
 		attributeDomainTableList = new ArrayList<attributeDomain>();
 		for (int i = 0; i < values.length; i++){
     		attributeDomainTableList.add(values[i]);
-       	}
+            }
 	}
 
 	public void setAttributeDomainListTable(attributeDomain[] values){
@@ -42,8 +43,13 @@ public class attributeDomainTable{
 
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
+                        System.out.print(attributeName.get(i)+ ": ");
 			getRow(i).printThis();
 			System.out.println();
 		}
 	}
+        
+        public void remove(int index){
+            attributeDomainTableList.remove(index);
+        }
 }
