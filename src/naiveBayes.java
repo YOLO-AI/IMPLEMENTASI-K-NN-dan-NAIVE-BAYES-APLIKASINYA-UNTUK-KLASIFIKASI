@@ -136,15 +136,11 @@ public class naiveBayes{
         }
         
          public void confusionMatrix(instanceTable DataTest){
-             System.out.println("Masuk!");
-             System.out.println("Ukuran data test : " + DataTest.size());
             int j;       
             for ( j = 0; j < DataTest.size(); j++) {
                 int lock = 0;
                 int k = 0, m = 0;
                 String realClass = datastore.DataStore.getElement(j, datastore.DataStore.getRow(j).size()-1);
-                System.out.println("Real Class : " + realClass);
-                System.out.println("Solution : " + solution[j]);
                 //if (dataTest.getElement(j, dataTest.getRow(j).size() - 1).equals(preAns[j])) {
                 while (k < datastore.ClassDomain.size() && !realClass.equals(datastore.ClassDomain.getElement(k))){
                     k++;

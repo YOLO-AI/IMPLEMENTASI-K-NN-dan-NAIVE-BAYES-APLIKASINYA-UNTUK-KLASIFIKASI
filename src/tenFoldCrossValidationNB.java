@@ -55,6 +55,7 @@ public class tenFoldCrossValidationNB{
 			TenNaiveBayes[i].makeModel(TenDataTraining[i]);
                         TenNaiveBayes[i].classify(TenDataTest[i]);
 			TenNaiveBayes[i].calculateAccuracy(TenDataTest[i]);
+                        TenNaiveBayes[i].confusionMatrix(TenDataTest[i]);
 		}
 	}
         
