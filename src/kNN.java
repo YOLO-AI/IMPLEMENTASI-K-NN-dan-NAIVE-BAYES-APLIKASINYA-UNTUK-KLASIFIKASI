@@ -8,24 +8,46 @@ public class kNN {
     public float accuracy;
     public instanceTable dataTest, dataTraining;
     public String[] trueAns, preAns;
-    public int[] jarak ;
+    public float[] jarak ;
     public boolean[] flagjarak ;
     public int k;
     public int[] indexjawab;
     public int[] arrklasifikasi ;
     public int countpredicted;
-
+    public float[] maxnumeric;
+    public float[] minnumeric;
+    
     public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
         this.k = min(k,dataTraining.size());
         trueAns=new String[dataTest.size()];
         preAns=new String[dataTest.size()];
-        jarak= new int[dataTraining.size()];
+        jarak= new float[dataTraining.size()];
         flagjarak= new boolean[dataTraining.size()];
         arrklasifikasi= new int[datastore.ClassDomain.classDomainList.size()];
         indexjawab = new int[this.k];
-
+        
+        maxnumeric= new float[datastore.AttributeDomainTable.size()];
+        minnumeric= new float[datastore.AttributeDomainTable.size()];
+        for (int i=0; i < datastore.AttributeDomainTable.size();i++){
+            if (datastore.AttributeDomainTable.getElement(i,0).equals("numeric")){
+                float max=Float.parseFloat(datatraining.getElement(0, i));
+                float min=Float.parseFloat(datatraining.getElement(0, i));
+                for (int j=1; j< datatraining.size();j++){
+                    if(max<Float.parseFloat(datatraining.getElement(j, i))){
+                        max=Float.parseFloat(datatraining.getElement(j, i));
+                    }
+                    if(min>Float.parseFloat(datatraining.getElement(j, i))){
+                        min=Float.parseFloat(datatraining.getElement(j, i));
+                    }
+                }
+                maxnumeric[i]=max;
+                minnumeric[i]=min;
+            }
+        }
+        
+        //datastore.AttributeDomainTable.getelement()
         for (int i = 0; i < dataTest.size(); i++) {
             inisialisasiflag();
             inisialisasiarrklasifikasi();
@@ -63,9 +85,14 @@ public class kNN {
         for (int i = 0; i < dataTraining.size(); i++) {
             jarak[i] = 0;
             for (int j = 0; j < data.size() - 1; j++) {
+                if (datastore.AttributeDomainTable.getElement(j,0).equals("numeric")){
+                    jarak[i]=jarak[i]+((Float.parseFloat(data.getElement(j))-minnumeric[j])/(maxnumeric[j]-minnumeric[j]));
+                }
+                
                 if (!data.getElement(j).equals(dataTraining.getElement(i, j))) {
                     jarak[i] = jarak[i] + 1;
                 }
+                
             }
         }
     }
@@ -77,7 +104,7 @@ public class kNN {
             while (flagjarak[a]==true){
                 a++;
             }
-            int min = jarak[a];
+            float min = jarak[a];
             int indexmin = a;
             for (int j = 0; j < dataTraining.size(); j++) {
                 if (min > jarak[j] && flagjarak[j] == false) {
