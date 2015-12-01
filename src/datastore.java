@@ -86,9 +86,9 @@ public class datastore{
        	AttributeDomainTable.printThis();
 	}
 
-	public static void inputDatastore() throws Exception {
-    	System.out.print("Input file name: ");
-    	Scanner scan = new Scanner(System.in);
+	public static void inputDatastore(String namafile) throws Exception {
+    	//System.out.print("Input file name: ");
+    	Scanner scan = new Scanner(namafile);
     	String inputFile = scan.nextLine();
         String separator = "\\.";
         String[] fileName = inputFile.split(separator);
