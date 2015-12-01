@@ -62,6 +62,7 @@ public class tenFoldCrossValidationNB{
                 for(int i = 0; i < 10; i++){
 			TenkNN[i] = new kNN(TenDataTest[i],TenDataTraining[i],k);
                         TenkNN[i].printAccuracy();
+                        TenkNN[i].printConfusionMatrix();
 		}
         }
 

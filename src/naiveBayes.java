@@ -6,6 +6,7 @@ public class naiveBayes{
 	public ArrayList<ArrayList<ArrayList<Float>>> generalProbabilityModel; // (row,att,class)
 	public float accuracy; //akurasi model Naive Bayes
         public String[] solution;
+        public int[][] Matrix = new int[datastore.ClassDomain.size()][datastore.ClassDomain.size()];
         
 	public naiveBayes(){
 		classProbabilityModel = new ArrayList<Float>();
@@ -125,7 +126,37 @@ public class naiveBayes{
                 }
                 accuracy = (float) count / DataTest.size();
 	}
+        
+        public void InisialisasiMatrix(){
+             for (int a = 0; a < Matrix.length; a++){
+                 for (int b = 0; b < Matrix.length; b++){
+                     Matrix[a][b] = 0;
+                 }
+             }
+        }
+        
+         public void confusionMatrix(instanceTable DataTest){
+             System.out.println("Masuk!");
+             System.out.println("Ukuran data test : " + DataTest.size());
+            int j;       
+            for ( j = 0; j < DataTest.size(); j++) {
+                int lock = 0;
+                int k = 0, m = 0;
+                String realClass = datastore.DataStore.getElement(j, datastore.DataStore.getRow(j).size()-1);
+                System.out.println("Real Class : " + realClass);
+                System.out.println("Solution : " + solution[j]);
+                //if (dataTest.getElement(j, dataTest.getRow(j).size() - 1).equals(preAns[j])) {
+                while (k < datastore.ClassDomain.size() && !realClass.equals(datastore.ClassDomain.getElement(k))){
+                    k++;
+                }
 
+                while (m < datastore.ClassDomain.size() && !solution[j].equals(datastore.ClassDomain.getElement(m))){
+                    m++;
+                }
+
+                Matrix[k][m] = Matrix[k][m] + 1;
+            }        
+        }
 	public void printClass(){
 		System.out.println("Model Probabilitas per Kelas:");
 		for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
@@ -155,18 +186,37 @@ public class naiveBayes{
 		System.out.println("Akurasi Model Probabilitas:");
 		System.out.println(accuracy*100 + "%");
 	}
-
+        
+        public void printConfusionMatrix(){
+            System.out.print("      ");
+            for (int a = 0; a < datastore.ClassDomain.size(); a++){
+                System.out.print(datastore.ClassDomain.getElement(a) + "        ");
+            }
+            System.out.println();
+            for (int a = 0; a < Matrix.length; a++){
+                System.out.print(datastore.ClassDomain.getElement(a) + "    ");
+                for (int b = 0; b < Matrix.length; b++){
+                    System.out.print(Matrix[a][b] + "           ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+        
 	public void printThis(){
 		printClass();
 		System.out.println();
 		printGeneral();
 		printAccuracy();
                 System.out.println();
+                printConfusionMatrix();
 	}
 
 	public void mulai(instanceTable DataTraining, instanceTable DataTest){
 		makeModel(DataTraining);
                 classify(DataTest);
+                InisialisasiMatrix();
+                confusionMatrix(DataTest);
                 calculateAccuracy(DataTest);
                 printThis();
 	}
