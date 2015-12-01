@@ -38,7 +38,8 @@ public class attributeDomain{
 
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
-			System.out.print(getElement(i) + " ");
+			System.out.printf("%7s", getElement(i));
+                        System.out.print(" ");
 		}
 	}
 }

@@ -82,12 +82,12 @@ public class datastore{
 
 	public static void printClass(){
 		System.out.println("Kelas-Kelas Klasifikasi:");
-       	ClassDomain.printThis();
+                ClassDomain.printThis();
 	}
 
 	public static void printAttribute(){
 		System.out.println("Atribut-Atribut dan Domainnya:");
-       	AttributeDomainTable.printThis();
+                AttributeDomainTable.printThis();
 	}
         
 	public static void inputDatastore(String namafile) throws Exception {

@@ -43,7 +43,8 @@ public class attributeDomainTable{
 
 	public void printThis(){
 		for (int i = 0; i < size(); i++){
-                        System.out.print(attributeName.get(i)+ ": ");
+                        System.out.printf("%8s", attributeName.get(i));
+                        System.out.print(": ");
 			getRow(i).printThis();
 			System.out.println();
 		}

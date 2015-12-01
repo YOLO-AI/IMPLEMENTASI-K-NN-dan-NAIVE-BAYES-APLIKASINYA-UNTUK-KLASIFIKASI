@@ -23,6 +23,7 @@ public class Main{
                         NaiveBayes.classify(datastore.DataStore);
                         NaiveBayes.calculateAccuracy(datastore.DataStore);
                         NaiveBayes.confusionMatrix(datastore.DataStore);
+                        NaiveBayes.toText("model.txt");
                         System.out.println("*** Full Training Naive Bayes ***");
 			NaiveBayes.printThis();
                     } else if (inputFile == 2){

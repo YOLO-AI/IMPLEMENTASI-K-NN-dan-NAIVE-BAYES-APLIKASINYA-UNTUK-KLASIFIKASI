@@ -1,4 +1,6 @@
 //file: naiveBayes.java
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class naiveBayes{
@@ -164,14 +166,25 @@ public class naiveBayes{
 
 	public void printGeneral(){
 		System.out.println("Model Probabilitas Keseluruhan:");
+                System.out.printf("%6s", "");
+                System.out.print(" ");
+                for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(0).size(); datt++){
+                    for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+                            System.out.printf("%5s", datastore.ClassDomain.getElement(dcls));
+                            System.out.print(" ");
+                    }
+                    System.out.print("| ");
+                }
+                System.out.println();
 		for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
-                        System.out.print(datastore.AttributeDomainTable.attributeName.get(att)+" ");
+                        System.out.printf("%6s", datastore.AttributeDomainTable.attributeName.get(att));
+                        System.out.print(" ");
 			for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
 				for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
                                         System.out.printf("%.3f", generalProbabilityModel.get(att).get(datt).get(dcls));
 					System.out.print(" ");
 				}
-				System.out.print(" | ");
+				System.out.print("| ");
 			}
 			System.out.println();
 			System.out.println();
@@ -179,20 +192,20 @@ public class naiveBayes{
 	}
 
 	public void printAccuracy(){
-		System.out.println("Akurasi Model Probabilitas:");
-		System.out.println(accuracy*100 + "%");
+                System.out.println("Akurasi Model Probabilitas:");
+                System.out.println(accuracy*100 + "%");
 	}
         
         public void printConfusionMatrix(){
-            System.out.print("      ");
+            System.out.printf("%9s", "");
             for (int a = 0; a < datastore.ClassDomain.size(); a++){
-                System.out.print(datastore.ClassDomain.getElement(a) + "        ");
+                System.out.printf("%8s", datastore.ClassDomain.getElement(a));
             }
             System.out.println();
             for (int a = 0; a < Matrix.length; a++){
-                System.out.print(datastore.ClassDomain.getElement(a) + "    ");
+                System.out.printf("%9s", datastore.ClassDomain.getElement(a));
                 for (int b = 0; b < Matrix.length; b++){
-                    System.out.print(Matrix[a][b] + "           ");
+                    System.out.printf("%8d", Matrix[a][b]);
                 }
                 System.out.println();
             }
@@ -216,4 +229,63 @@ public class naiveBayes{
                 calculateAccuracy(DataTest);
                 printThis();
 	}
+        
+        public void toText(String fileName) throws FileNotFoundException{
+            PrintWriter out = new PrintWriter(fileName);
+            
+            //print class
+            out.println("Model Probabilitas per Kelas:");
+		for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+                        out.printf("%.3f", classProbabilityModel.get(dcls));
+			out.print(" ");
+		}
+            out.println();
+            
+            //print general
+            out.println("Model Probabilitas Keseluruhan:");
+            out.printf("%6s", "");
+            out.print(" ");
+            for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(0).size(); datt++){
+                for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+                        out.printf("%5s", datastore.ClassDomain.getElement(dcls));
+                        out.print(" ");
+                }
+                out.print("| ");
+            }
+            out.println();
+            for (int att = 0; att < datastore.AttributeDomainTable.size(); att++){
+                    out.printf("%6s", datastore.AttributeDomainTable.attributeName.get(att));
+                    out.print(" ");
+                    for (int datt = 0; datt < datastore.AttributeDomainTable.getRow(att).size(); datt++){
+                            for (int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+                                    out.printf("%.3f", generalProbabilityModel.get(att).get(datt).get(dcls));
+                                    out.print(" ");
+                            }
+                            out.print("| ");
+                    }
+                    out.println();
+                    out.println();
+            }    
+            
+            //print accuracy
+            out.println("Akurasi Model Probabilitas:");
+            out.println(accuracy*100 + "%");
+            
+            //print confusion matrix
+            out.printf("%9s", "");
+            for (int a = 0; a < datastore.ClassDomain.size(); a++){
+                out.printf("%8s", datastore.ClassDomain.getElement(a));
+            }
+            out.println();
+            for (int a = 0; a < Matrix.length; a++){
+                out.printf("%9s", datastore.ClassDomain.getElement(a));
+                for (int b = 0; b < Matrix.length; b++){
+                    out.printf("%8d", Matrix[a][b]);
+                }
+                out.println();
+            }
+            out.println();
+            
+            out.close();
+        }
 }
