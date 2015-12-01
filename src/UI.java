@@ -1,5 +1,6 @@
-
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -47,6 +48,7 @@ public class UI extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,10 +110,18 @@ public class UI extends javax.swing.JFrame {
         jLabel6.setText("K=");
 
         jButton3.setFont(new java.awt.Font("Trajan Pro 3", 1, 11)); // NOI18N
-        jButton3.setText("EXECUTE");
+        jButton3.setText("FULL TRAINING");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setFont(new java.awt.Font("Trajan Pro 3", 1, 11)); // NOI18N
+        jButton4.setText("TEN FOLDS");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -121,7 +131,17 @@ public class UI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addGap(119, 119, 119))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -131,20 +151,10 @@ public class UI extends javax.swing.JFrame {
                 .addComponent(jTextField2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                .addGap(119, 119, 119))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +174,11 @@ public class UI extends javax.swing.JFrame {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,6 +189,7 @@ public class UI extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        i=1;
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -185,6 +198,7 @@ public class UI extends javax.swing.JFrame {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
+        i=2;
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -196,7 +210,7 @@ public class UI extends javax.swing.JFrame {
         status = chooser1.showOpenDialog(null);
         if (status == JFileChooser.APPROVE_OPTION) {
           File selectedFile = chooser1.getSelectedFile();
-          jTextField1.setText(selectedFile.getParent()+selectedFile.getName());
+          jTextField1.setText(selectedFile.getName());
           //System.out.println(selectedFile.getName());
         } else if (status == JFileChooser.CANCEL_OPTION) {
           //System.out.println("calceled");
@@ -212,7 +226,7 @@ public class UI extends javax.swing.JFrame {
         status = chooser2.showOpenDialog(null);
         if (status == JFileChooser.APPROVE_OPTION) {
           File selectedFile = chooser2.getSelectedFile();
-          jTextField2.setText(selectedFile.getParent()+selectedFile.getName());
+          jTextField2.setText(selectedFile.getName());
           //System.out.println(selectedFile.getName());
         } else if (status == JFileChooser.CANCEL_OPTION) {
           //System.out.println("calceled");
@@ -221,36 +235,126 @@ public class UI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
         if(i==1){
+            // Create a stream to hold the output
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            // IMPORTANT: Save the old System.out!
+            PrintStream old = System.out;
+            // Tell Java to use your special stream
+            System.setOut(ps);
+            // Print some output: goes to your special stream
+            System.out.println("*** Full Training Naive Bayes ***");
+            datastore Datastore = new datastore();
             try {
-                datastore.inputDatastore();
+                datastore.inputDatastore(jTextField1.getText());
             } catch (Exception ex) {
                 Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
             }
-               
             naiveBayes NaiveBayes = new naiveBayes();
-            NaiveBayes.mulai(datastore.DataStore, datastore.DataStore);
-            jTextArea1.setText("Naive Bayes Performed");
+            NaiveBayes.makeModel(datastore.DataStore);
+            NaiveBayes.classify(datastore.DataStore);
+            NaiveBayes.calculateAccuracy(datastore.DataStore);
+            NaiveBayes.printThis();
+            // Put things back
+            System.out.flush();
+            System.setOut(old);
+            // Show what happened
+            jTextArea1.setText(baos.toString());
         }
         else if(i==2){
             k= Integer.parseInt(jTextField3.getText());
+            // Create a stream to hold the output
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            // IMPORTANT: Save the old System.out!
+            PrintStream old = System.out;
+            // Tell Java to use your special stream
+            System.setOut(ps);
+            // Print some output: goes to your special stream
             datastore Datastore = new datastore();
             try {
-                Datastore.inputDatastore();
+                Datastore.inputDatastore(jTextField2.getText());
             } catch (Exception ex) {
                 Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            kNN knn= new kNN(Datastore.DataStore,Datastore.DataStore,5);
+            kNN knn= new kNN(Datastore.DataStore,Datastore.DataStore,k);
             knn.printklasifikasi();
             knn.printAccuracy();
-            jTextArea1.setText("k-NN Performed dengan k="+k);
+            // Put things back
+            System.out.flush();
+            System.setOut(old);
+            // Show what happened
+            jTextArea1.setText(baos.toString());
         }
         else
         {
             jTextArea1.setText("Nothing Performed");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        i+=2;
+        if(i==3){
+            
+            // Create a stream to hold the output
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            // IMPORTANT: Save the old System.out!
+            PrintStream old = System.out;
+            // Tell Java to use your special stream
+            System.setOut(ps);
+            // Print some output: goes to your special stream
+            System.out.println("*** Ten Fold Cross Validation Naive Bayes ***");
+            datastore Datastore = new datastore();
+            try {
+                datastore.inputDatastore(jTextField1.getText());
+            } catch (Exception ex) {
+                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            naiveBayes NaiveBayes = new naiveBayes();
+            tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
+            tenFoldCrossValidationNB.mulaiNB();
+            // Put things back
+            System.out.flush();
+            System.setOut(old);
+            // Show what happened
+            jTextArea1.setText(baos.toString());
+        }
+        else if(i==4){
+            k= Integer.parseInt(jTextField3.getText());
+            // Create a stream to hold the output
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream ps = new PrintStream(baos);
+            // IMPORTANT: Save the old System.out!
+            PrintStream old = System.out;
+            // Tell Java to use your special stream
+            System.setOut(ps);
+            // Print some output: goes to your special streas
+            //KNN constructor
+            datastore Datastore = new datastore();
+            try {
+                datastore.inputDatastore(jTextField2.getText());
+            } catch (Exception ex) {
+                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            kNN KNN = new kNN(datastore.DataStore, datastore.DataStore,k);
+            tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
+            tenFoldCrossValidationNB.mulaikNN(5);
+            // Put things back
+            System.out.flush();
+            System.setOut(old);
+            // Show what happened
+            jTextArea1.setText(baos.toString());
+        }
+        else
+        {
+            jTextArea1.setText("Nothing Performed");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +395,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -6,7 +6,10 @@ public class Main{
 	public static void main(String[] args) throws Exception{
                 //datastore Datastore = new datastore();	
                 //Datastore.inputDatastore();
-                datastore.inputDatastore("../car_data.arff");
+                System.out.print("Nama file input:");
+                Scanner s=new Scanner(System.in);
+                String namafile=s.nextLine();
+                datastore.inputDatastore(namafile);
                 while (true){
                     System.out.println("Menu : ");
                     System.out.println("1. Naive-Bayes Full Training");
@@ -23,7 +26,7 @@ public class Main{
                         NaiveBayes.classify(datastore.DataStore);
                         NaiveBayes.calculateAccuracy(datastore.DataStore);
                         System.out.println("*** Full Training Naive Bayes ***");
-			NaiveBayes.printThis();
+			            NaiveBayes.printThis();
                     } else if (inputFile == 2){
                         naiveBayes NaiveBayes = new naiveBayes();
                         tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
