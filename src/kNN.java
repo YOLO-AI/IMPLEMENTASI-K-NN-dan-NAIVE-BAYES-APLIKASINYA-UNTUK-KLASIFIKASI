@@ -14,14 +14,14 @@ public class kNN {
     public int[] indexjawab;
     public int[] arrklasifikasi ;
     public int countpredicted;
-<<<<<<< HEAD
+
     public float[] maxnumeric;
     public float[] minnumeric;
     
-=======
+
     public int[][] Matrix = new int[datastore.ClassDomain.size()][datastore.ClassDomain.size()];
 
->>>>>>> origin/master
+
     public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
@@ -194,5 +194,9 @@ public class kNN {
     public void printAccuracy() {
         System.out.print("Akurasi Model Probabilitas:");
         System.out.println(accuracy*100 + "%");
+    }
+    
+    public void printClass(){
+        System.out.println(preAns[0]);
     }
 }

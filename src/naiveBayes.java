@@ -210,7 +210,7 @@ public class naiveBayes{
 
 	public void mulai(instanceTable DataTraining, instanceTable DataTest){
 		makeModel(DataTraining);
-                classify(DataTest);
+                //classify(DataTest);
                 InisialisasiMatrix();
                 confusionMatrix(DataTest);
                 calculateAccuracy(DataTest);
