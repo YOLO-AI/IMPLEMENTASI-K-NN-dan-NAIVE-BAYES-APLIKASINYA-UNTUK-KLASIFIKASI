@@ -34,6 +34,7 @@ public class Main{
                         int k = scan.nextInt();
                         kNN KNN = new kNN(datastore.DataStore, datastore.DataStore,k);
                         KNN.printAccuracy();
+                        KNN.printConfusionMatrix();
                     } else if (inputFile == 4){
                         System.out.print("Masukkan nilai k : ");
                         scan = new Scanner(System.in);

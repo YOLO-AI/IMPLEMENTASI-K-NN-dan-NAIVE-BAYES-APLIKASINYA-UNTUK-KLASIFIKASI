@@ -14,9 +14,14 @@ public class kNN {
     public int[] indexjawab;
     public int[] arrklasifikasi ;
     public int countpredicted;
+<<<<<<< HEAD
     public float[] maxnumeric;
     public float[] minnumeric;
     
+=======
+    public int[][] Matrix = new int[datastore.ClassDomain.size()][datastore.ClassDomain.size()];
+
+>>>>>>> origin/master
     public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
@@ -138,6 +143,46 @@ public class kNN {
             }
         }
         accuracy = (float) ((float)countpredicted / j); 
+    }
+    
+    public void confusionMatrix(){
+        for (int a = 0; a < Matrix.length; a++){
+            for (int b = 0; b < Matrix.length; b++){
+                Matrix[a][b] = 0;
+            }
+        }
+        int j;       
+        for ( j = 0; j < dataTest.size(); j++) {
+            int lock = 0;
+            int k = 0, m = 0;
+            //if (dataTest.getElement(j, dataTest.getRow(j).size() - 1).equals(preAns[j])) {
+            while (k < datastore.ClassDomain.size() && !dataTest.getElement(j, dataTest.getRow(j).size() - 1).equals(datastore.ClassDomain.getElement(k))){
+                k++;
+            }
+            
+            while (m < datastore.ClassDomain.size() && !preAns[j].equals(datastore.ClassDomain.getElement(m))){
+                m++;
+            }
+            
+            Matrix[k][m] = Matrix[k][m] + 1;
+        }        
+    }
+    
+    public void printConfusionMatrix(){
+        confusionMatrix();
+        System.out.print("      ");
+        for (int a = 0; a < datastore.ClassDomain.size(); a++){
+            System.out.print(datastore.ClassDomain.getElement(a) + "        ");
+        }
+        System.out.println();
+        for (int a = 0; a < Matrix.length; a++){
+            System.out.print(datastore.ClassDomain.getElement(a) + "    ");
+            for (int b = 0; b < Matrix.length; b++){
+                System.out.print(Matrix[a][b] + "           ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
     
     public void printklasifikasi(){

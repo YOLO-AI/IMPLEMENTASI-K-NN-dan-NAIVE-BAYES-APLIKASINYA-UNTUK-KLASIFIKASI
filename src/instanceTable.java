@@ -20,15 +20,15 @@ public class instanceTable{
 	public instanceTable(instance[] values){
 		instanceTableList = new ArrayList<instance>();
 		for (int i = 0; i < values.length; i++){
-    		instanceTableList.add(values[i]);
-       	}
+                        instanceTableList.add(values[i]);
+                }
 	}
 
 	public void setInstanceListTable(instance[] values){
 		instanceTableList = new ArrayList<instance>();
 		for (int i = 0; i < values.length; i++){
-    		instanceTableList.add(values[i]);
-       	}
+                        instanceTableList.add(values[i]);
+                }
 	}
 
 	public void set(int index, instance value){
