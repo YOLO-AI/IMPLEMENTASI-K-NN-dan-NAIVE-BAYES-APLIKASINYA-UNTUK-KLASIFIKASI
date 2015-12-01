@@ -14,7 +14,7 @@ public class kNN {
     public int[] indexjawab;
     public int[] arrklasifikasi ;
     public int countpredicted;
-<<<<<<< HEAD
+
 
     public float[] maxnumeric;
     public float[] minnumeric;
@@ -23,11 +23,7 @@ public class kNN {
     public int[][] Matrix = new int[datastore.ClassDomain.size()][datastore.ClassDomain.size()];
 
 
-=======
-    public float[] maxnumeric;
-    public float[] minnumeric; 
-    public int[][] Matrix = new int[datastore.ClassDomain.size()][datastore.ClassDomain.size()];
->>>>>>> origin/master
+
     public kNN(instanceTable datatest, instanceTable datatraining, int k) {
         this.dataTest = new instanceTable(datatest);
         this.dataTraining = new instanceTable(datatraining);
