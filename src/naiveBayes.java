@@ -1,13 +1,7 @@
 //file: naiveBayes.java
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
-import weka.core.Instances;
-import weka.core.converters.ArffSaver;
-import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.Filter;
-import weka.filters.supervised.attribute.Discretize;
 
 public class naiveBayes{
 	public ArrayList<Float> classProbabilityModel;
@@ -26,7 +20,7 @@ public class naiveBayes{
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			float count = 0;
 			//iterasi seluruh DataStore
-                        for(int row = 0; row < DataTraining.size(); row++){
+			for(int row = 0; row < DataTraining.size(); row++){
 				if(DataTraining.getElement(row,datastore.AttributeDomainTable.size())
 					.equals(datastore.ClassDomain.getElement(dcls))){
 					count = count + 1;
@@ -37,7 +31,7 @@ public class naiveBayes{
 
 		//bagi jadi probabilitas, class
 		float total_class = 0;
-                for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
+		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
 			total_class = total_class + classProbabilityModel.get(dcls);
 		}
 		for(int dcls = 0; dcls < datastore.ClassDomain.size(); dcls++){
@@ -300,19 +294,5 @@ public class naiveBayes{
             out.println();
             
             out.close();
-        }
-        
-        public void filterData(String fileName) throws Exception{
-            DataSource source = new DataSource(fileName);
-            Instances dataset = source.getDataSet();
-            dataset.setClassIndex(dataset.numAttributes()-1);
-            Discretize discretize = new Discretize();
-            discretize.setInputFormat(dataset);
-            Instances newData=Filter.useFilter(dataset,discretize);
-            ArffSaver arff_saver=new ArffSaver();
-            arff_saver.setInstances(newData);
-            arff_saver.setFile(new File("discretized.arff"));
-            arff_saver.writeBatch();
-            System.out.println("Attributes discretized successfully");
         }
 }
