@@ -93,7 +93,7 @@ public class kNN {
             jarak[i] = 0;
             for (int j = 0; j < data.size() - 1; j++) {
                 if (datastore.AttributeDomainTable.getElement(j,0).equals("numeric")){
-                    jarak[i]=jarak[i]+((Float.parseFloat(data.getElement(j))-minnumeric[j])/(maxnumeric[j]-minnumeric[j]));
+                    jarak[i]=jarak[i]+((Math.abs(Float.parseFloat(data.getElement(j))-Float.parseFloat(dataTraining.getElement(i, j))))/(maxnumeric[j]-minnumeric[j]));
                 }
                 
                 if (!data.getElement(j).equals(dataTraining.getElement(i, j))) {
