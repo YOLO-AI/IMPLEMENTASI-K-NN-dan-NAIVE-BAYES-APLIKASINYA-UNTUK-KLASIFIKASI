@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -61,7 +60,7 @@ public class UI extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Trajan Pro 3", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("CLASSIFIER   C.H.O.L.Y.");
+        jLabel1.setText("CLASSIFIER   Y.O.L.O.");
 
         jLabel2.setFont(new java.awt.Font("Trajan Pro 3", 1, 11)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -75,6 +74,7 @@ public class UI extends javax.swing.JFrame {
         jLabel4.setText("Choose Your Alghorithm:");
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Courier New", 0, 13)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -223,15 +223,27 @@ public class UI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            datastore.inputDatastore(jTextField1.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
+        k= Integer.parseInt(jTextField3.getText());
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            datastore.inputDatastore(jTextField2.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -268,10 +280,17 @@ public class UI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(i==1){
-            //create file model
-            //FileWriter fw=new FileWriter();
-            GregorianCalendar c=new GregorianCalendar();
+        datastore Datastore = new datastore();
+        datastore.ClassDomain= new classDomain();
+        datastore.AttributeDomainTable=new attributeDomainTable();
+        datastore.dataName= new String();
+        datastore.DataStore= new instanceTable();
+        try {
+            datastore.inputDatastore(jTextField1.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if((i%2)==1){
             // Create a stream to hold the output
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream ps = new PrintStream(baos);
@@ -281,16 +300,11 @@ public class UI extends javax.swing.JFrame {
             System.setOut(ps);
             // Print some output: goes to your special stream
             System.out.println("*** Full Training Naive Bayes ***");
-            datastore Datastore = new datastore();
-            try {
-                datastore.inputDatastore(jTextField1.getText());
-            } catch (Exception ex) {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
             naiveBayes NaiveBayes = new naiveBayes();
             NaiveBayes.makeModel(datastore.DataStore);
             NaiveBayes.classify(datastore.DataStore);
             NaiveBayes.calculateAccuracy(datastore.DataStore);
+            NaiveBayes.confusionMatrix(datastore.DataStore);
             NaiveBayes.printThis();
             // Put things back
             System.out.flush();
@@ -298,8 +312,7 @@ public class UI extends javax.swing.JFrame {
             // Show what happened
             jTextArea1.setText(baos.toString());
         }
-        else if(i==2){
-            k= Integer.parseInt(jTextField3.getText());
+        else if((i%2)==0){
             // Create a stream to hold the output
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream ps = new PrintStream(baos);
@@ -308,15 +321,10 @@ public class UI extends javax.swing.JFrame {
             // Tell Java to use your special stream
             System.setOut(ps);
             // Print some output: goes to your special stream
-            datastore Datastore = new datastore();
-            try {
-                Datastore.inputDatastore(jTextField2.getText());
-            } catch (Exception ex) {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
             kNN knn= new kNN(Datastore.DataStore,Datastore.DataStore,k);
-            knn.printklasifikasi();
+            //knn.printklasifikasi();
             knn.printAccuracy();
+            knn.printConfusionMatrix();
             // Put things back
             System.out.flush();
             System.setOut(old);
@@ -331,9 +339,17 @@ public class UI extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        i+=2;
-        if(i==3){
-            
+        datastore Datastore = new datastore();
+        datastore.ClassDomain= new classDomain();
+        datastore.AttributeDomainTable=new attributeDomainTable();
+        datastore.dataName= new String();
+        datastore.DataStore= new instanceTable();
+        try {
+            datastore.inputDatastore(jTextField1.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if((i%2)==1){
             // Create a stream to hold the output
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream ps = new PrintStream(baos);
@@ -343,12 +359,6 @@ public class UI extends javax.swing.JFrame {
             System.setOut(ps);
             // Print some output: goes to your special stream
             System.out.println("*** Ten Fold Cross Validation Naive Bayes ***");
-            datastore Datastore = new datastore();
-            try {
-                datastore.inputDatastore(jTextField1.getText());
-            } catch (Exception ex) {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
             naiveBayes NaiveBayes = new naiveBayes();
             tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
             tenFoldCrossValidationNB.mulaiNB();
@@ -358,7 +368,7 @@ public class UI extends javax.swing.JFrame {
             // Show what happened
             jTextArea1.setText(baos.toString());
         }
-        else if(i==4){
+        else if((i%2)==0){
             k= Integer.parseInt(jTextField3.getText());
             // Create a stream to hold the output
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -369,12 +379,6 @@ public class UI extends javax.swing.JFrame {
             System.setOut(ps);
             // Print some output: goes to your special streas
             //KNN constructor
-            datastore Datastore = new datastore();
-            try {
-                datastore.inputDatastore(jTextField2.getText());
-            } catch (Exception ex) {
-                Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-            }
             kNN KNN = new kNN(datastore.DataStore, datastore.DataStore,k);
             tenFoldCrossValidationNB TenFoldCrossValidationNB = new tenFoldCrossValidationNB();
             tenFoldCrossValidationNB.mulaikNN(5);
