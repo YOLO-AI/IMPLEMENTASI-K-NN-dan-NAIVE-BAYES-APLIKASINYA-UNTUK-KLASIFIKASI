@@ -94,11 +94,11 @@ public class naiveBayes{
                             //Cari indeks atribut
                             int dattIndex=0;
                             String domainAtt = datastore.AttributeDomainTable.getElement(j, dattIndex);
-                            while(!(attribute.equals(domainAtt))){
-                                    dattIndex++;
+                            while(!(attribute.equals(domainAtt)) && dattIndex < datastore.AttributeDomainTable.getRow(j).size()){
                                     domainAtt = datastore.AttributeDomainTable.getElement(j, dattIndex);
+                                    dattIndex++;
                             }
-                            
+                            dattIndex=dattIndex-1;
                             //Kalikan dari model probabilitas
                             for(int k=0; k<datastore.ClassDomain.size(); k++){
                                     classProb[k] *= generalProbabilityModel.get(j).get(dattIndex).get(k);

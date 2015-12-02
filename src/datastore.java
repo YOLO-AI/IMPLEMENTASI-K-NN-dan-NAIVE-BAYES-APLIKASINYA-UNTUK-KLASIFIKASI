@@ -31,13 +31,36 @@ public class datastore{
 	*/
 
 	public static void inputInstanceDataStore(String[] tokens){
-		// menambahkan sebuah instance ke dalam DataStore
-
+		// membersihkan token dari petik
+                ArrayList<String> tokenBersih = new ArrayList<String>();
+                String buffer = "";
+                for(int i = 0; i < tokens.length; i++){
+                    if(!tokens[i].equals("")){
+                                if(tokens[i].charAt(0) == '\''){
+                                    if(tokens[i].charAt(tokens[i].length()-1) == '\''){
+                                        tokenBersih.add(tokens[i].substring(1, tokens[i].length()-1));
+                                    }
+                                }
+                                else if (tokens[i].charAt(tokens[i].length()-1) == '\''){
+                                    buffer = buffer + " " + tokens[i].substring(0, tokens[i].length()-1);                                    
+                                    tokenBersih.add(buffer);
+                                    System.out.println(buffer);
+                                    buffer = "";
+                                }
+                                else if(!buffer.equals("")){
+                                    buffer = buffer + " " + tokens[i];
+                                }
+                                else{
+                                    tokenBersih.add(tokens[i]);
+                                }
+                            }
+                }
 		// menyalin isi tokens menjadi sebuah instance temp
-		instance temp = new instance(tokens);
+		instance temp = new instance(tokenBersih);
 
        	// temp ditambahkan pada DataStore
        	DataStore.add(temp);
+        DataStore.printThis();
 	}
         /*
 	public static void inputClassDomain(){
@@ -109,14 +132,78 @@ public class datastore{
                 thisLine = br.readLine();
                 int i = 0;
                 while(!thisLine.equals("@data")){
+                    String buffer = "";
                     String[] temp = thisLine.split(",\\ | \\{| |}");
+                    System.out.println();
                     if (temp[0].equals("@relation")){
-                        dataName = temp[1];
-                    } else if (temp[0].equals("@attribute")){
-                        AttributeDomainTable.attributeName.add(temp[1]);
+                        for (int j = 1; j < temp.length; j++){
+                            if(!temp[j].equals("")){
+                                if(temp[j].charAt(0) == '\''){
+                                    if(temp[j].charAt(temp[j].length()-1) == '\''){
+                                        dataName = temp[j].substring(1, temp[j].length()-1);
+                                    }
+                                    else{
+                                        buffer = buffer + temp[j].substring(1);
+                                    }
+                                }
+                                else if (temp[j].charAt(temp[j].length()-1) == '\''){
+                                    buffer = buffer + " " + temp[j].substring(0, temp[j].length()-1);                                    
+                                    dataName = buffer;
+                                    buffer = "";
+                                }
+                                else if(!buffer.equals("")){
+                                    buffer = buffer + " " + temp[j];
+                                }
+                                else{
+                                    dataName = temp[j];
+                                }
+                            }
+                        }
+                    }
+                    else if (temp[0].equals("@attribute")){
+                        boolean nameAdded = false;
                         attributeDomain attDomTemp = new attributeDomain();
-                        for (int j = 2; j < temp.length; j++){
-                            attDomTemp.add(temp[j]);
+                        for (int j = 1; j < temp.length; j++){
+                            if(!temp[j].equals("")){
+                                if(temp[j].charAt(0) == '\''){
+                                    if(temp[j].charAt(temp[j].length()-1) == '\''){
+                                        if(!nameAdded){
+                                            AttributeDomainTable.attributeName.add(temp[j].substring(1,temp[j].length()-1));
+                                            nameAdded = true;
+                                        }
+                                        else{
+                                            attDomTemp.add(temp[j]);
+                                        }
+                                    }
+                                    else{
+                                        buffer = buffer + temp[j].substring(1);
+                                    }
+                                }
+                                else if (temp[j].charAt(temp[j].length()-1) == '\''){
+                                    buffer = buffer + " " + temp[j].substring(0, temp[j].length()-1);
+                                    if(!nameAdded){
+                                            AttributeDomainTable.attributeName.add(buffer);
+                                            buffer = "";
+                                            nameAdded = true;
+                                        }
+                                        else{
+                                            attDomTemp.add(buffer);
+                                        }
+                                    buffer = "";
+                                }
+                                else if(!buffer.equals("")){
+                                    buffer = buffer + " " + temp[j];
+                                }
+                                else{
+                                    if(!nameAdded){
+                                        AttributeDomainTable.attributeName.add(temp[j]);
+                                        nameAdded = true;
+                                    }
+                                    else{
+                                        attDomTemp.add(temp[j]);
+                                    }
+                                }
+                            }
                         }
                         AttributeDomainTable.add(attDomTemp);
                         i++;

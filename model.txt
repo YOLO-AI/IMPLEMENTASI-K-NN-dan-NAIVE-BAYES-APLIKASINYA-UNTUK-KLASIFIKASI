@@ -1,0 +1,33 @@
+Model Probabilitas per Kelas:
+0.327 0.355 0.079 0.000 0.061 0.042 0.136 
+Model Probabilitas Keseluruhan:
+       build wind float build wind non-float vehic wind float vehic wind non-float containers tableware headlamps | 
+    RI 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Na 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Mg 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Al 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Si 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+     K 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Ca 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Ba 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+    Fe 0.000 0.000 0.000 0.000 0.000 0.000 0.000 | 
+
+Akurasi Model Probabilitas:
+32.71028%
+         build wind floatbuild wind non-floatvehic wind floatvehic wind non-floatcontainerstablewareheadlamps
+build wind float      70       0       0       0       0       0       0
+build wind non-float      76       0       0       0       0       0       0
+vehic wind float      17       0       0       0       0       0       0
+vehic wind non-float       0       0       0       0       0       0       0
+containers      13       0       0       0       0       0       0
+tableware       9       0       0       0       0       0       0
+headlamps      29       0       0       0       0       0       0
+

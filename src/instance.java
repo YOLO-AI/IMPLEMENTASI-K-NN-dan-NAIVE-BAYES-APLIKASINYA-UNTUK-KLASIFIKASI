@@ -16,6 +16,13 @@ public class instance{
     		instanceList.add(values[i]);
        	}
 	}
+        
+        public instance(ArrayList<String> values){
+		instanceList = new ArrayList<String>();
+		for (int i = 0; i < values.size(); i++){
+    		instanceList.add(values.get(i));
+       	}
+	}
 
 	public void setInstanceList(String[] values){
 		instanceList = new ArrayList<String>();

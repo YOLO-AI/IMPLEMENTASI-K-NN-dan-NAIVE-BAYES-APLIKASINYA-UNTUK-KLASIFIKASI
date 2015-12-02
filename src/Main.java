@@ -6,7 +6,7 @@ public class Main{
 	public static void main(String[] args) throws Exception{
                 //datastore Datastore = new datastore();	
                 //Datastore.inputDatastore();
-                datastore.inputDatastore("car_data.arff");
+                datastore.inputDatastore("glass.arff");
                 while (true){
                     System.out.println("Menu : ");
                     System.out.println("1. Naive-Bayes Full Training");
